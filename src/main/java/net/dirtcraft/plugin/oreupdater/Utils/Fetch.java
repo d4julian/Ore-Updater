@@ -2,6 +2,7 @@ package net.dirtcraft.plugin.oreupdater.Utils;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.dirtcraft.plugin.oreupdater.Configuration.PluginConfiguration;
 import net.dirtcraft.plugin.oreupdater.Data.Plugin;
 import net.dirtcraft.plugin.oreupdater.OreUpdater;
 import org.apache.commons.io.FileUtils;
@@ -27,18 +28,20 @@ public class Fetch {
 
         try {
             File pluginFolder = null;
-            try {
-                if (plugin.getDirectory().isPresent())
-                    pluginFolder = plugin.getDirectory().get().getParent().toFile();
-            } catch (NullPointerException exception){
-                if (main.getContainer().getSource().isPresent())
-                    pluginFolder = main.getContainer().getSource().get().getParent().toFile();
-            }
+            if (PluginConfiguration.pluginDirectory.length() == 0) {
+                try {
+                    if (plugin.getDirectory().isPresent())
+                        pluginFolder = plugin.getDirectory().get().getParent().toFile();
+                } catch (NullPointerException exception) {
+                    if (main.getContainer().getSource().isPresent())
+                        pluginFolder = main.getContainer().getSource().get().getParent().toFile();
+                }
 
-            if (pluginFolder == null) {
-                main.getLogger().error("Could not get the plugins directory. Please contact Julian immediately!");
-                return false;
-            }
+                if (pluginFolder == null) {
+                    main.getLogger().error("Could not get the plugins directory. Please contact Julian immediately and/or specify it manually in configuration!");
+                    return false;
+                }
+            } else pluginFolder = new File(PluginConfiguration.pluginDirectory);
 
             try {
                 for (File file : pluginFolder.listFiles()) {

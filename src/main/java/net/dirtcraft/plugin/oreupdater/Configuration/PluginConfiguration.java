@@ -9,6 +9,9 @@ import java.util.ArrayList;
 @ConfigSerializable
 public class PluginConfiguration {
 
+    @Setting(value = "Plugin Directory", comment = "[OPTIONAL] Only specify this if you are having issues updating plugins (usually caused by Windows OS)")
+    public static String pluginDirectory = "";
+
     @Setting(value = "Automatic Updates", comment = "Automatically update plugins from Ore on shut down for ALL plugins. If enabled, this will override \"Plugins\"")
     public static boolean automaticUpdates = false;
 
