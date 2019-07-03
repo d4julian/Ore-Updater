@@ -28,13 +28,11 @@ public class Fetch {
         try {
             File pluginFolder = null;
             try {
-                if (plugin.getDirectory().isPresent()) {
+                if (plugin.getDirectory().isPresent())
                     pluginFolder = plugin.getDirectory().get().getParent().toFile();
-                }
             } catch (NullPointerException exception){
-                if (main.getContainer().getSource().isPresent()) {
+                if (main.getContainer().getSource().isPresent())
                     pluginFolder = main.getContainer().getSource().get().getParent().toFile();
-                }
             }
 
             if (pluginFolder == null) {
@@ -78,7 +76,7 @@ public class Fetch {
     public ArrayList<Plugin> hasUpdatePlugins(ArrayList<Plugin> pluginsArray) {
         ArrayList<Plugin> plugins = new ArrayList<>();
         for (Plugin plugin : pluginsArray) {
-            if (!plugin.getCurrentVersion().equals(plugin.getNewVersion())) plugins.add(plugin);
+            if (!plugins.contains(plugin) && !plugin.getCurrentVersion().equals(plugin.getNewVersion())) plugins.add(plugin);
         }
         return plugins;
     }
